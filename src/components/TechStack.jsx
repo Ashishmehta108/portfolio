@@ -20,7 +20,7 @@ const TechStack = () => {
       >
         <div>
           <span className="mono-label">Tech Stack</span>
-          <h2 className="text-[42px] mt-4">Built with the best tools.</h2>
+          <h2 className="text-[32px] md:text-[42px] leading-tight mt-4">Built with the best tools.</h2>
         </div>
 
         <div className="flex flex-wrap gap-3">

@@ -1,69 +1,651 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&family=Geist+Mono:wght@400&display=swap");
 @import "tailwindcss";
 
-@theme {
+/* ─── LIGHT THEME (default) ─────────────────────────────────── */
+:root {
+  --color-bg: #fdfdfc;
+  --color-bg-subtle: #f4f3f0;
+  --color-bg-muted: #eeede9;
+  --color-border: #e4e2db;
+  --color-border-strong: #ccc9c0;
+  --color-text-primary: #1a1a18;
+  --color-text-secondary: #7c7a72;
+  --color-text-tertiary: #b0ada5;
+  --color-accent: #1a4d36;
+  --color-accent-light: #eef5f1;
+  --color-accent-hover: #123d2b;
   --color-white: #ffffff;
-  --color-bg: #fafaf9;
-  --color-bg-subtle: #f5f4f1;
-  --color-bg-muted: #eeece8;
-  --color-border: #e4e2dc;
-  --color-border-strong: #ccc9c1;
-  --color-text-primary: #111110;
-  --color-text-secondary: #6b6860;
-  --color-text-tertiary: #a8a49e;
-  --color-accent: #18794e;
-  --color-accent-light: #f0faf5;
-  --color-accent-hover: #136740;
 
-  --font-serif: "Instrument Serif", serif;
-  --font-sans: "Geist", sans-serif;
-  --font-mono: "Geist Mono", monospace;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.025);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.04), 0 12px 36px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 48px rgba(0, 0, 0, 0.05), 0 24px 80px rgba(0, 0, 0, 0.04);
+  --shadow-hover:
+    0 20px 60px rgba(26, 77, 54, 0.12), 0 8px 24px rgba(26, 77, 54, 0.08);
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.07), 0 16px 48px rgba(0,0,0,0.05);
+  --noise-opacity: 0.028;
+  --grain-blend: multiply;
 }
 
+/* ─── DARK THEME ────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg: #0e0f0d;
+  --color-bg-subtle: #141512;
+  --color-bg-muted: #1c1d1a;
+  --color-border: #2a2b27;
+  --color-border-strong: #3a3c37;
+  --color-text-primary: #f0efe9;
+  --color-text-secondary: #7a7b72;
+  --color-text-tertiary: #4a4b44;
+  --color-accent: #4ade98;
+  --color-accent-light: #0e2a1c;
+  --color-accent-hover: #6beca8;
+  --color-white: #1c1d1a;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4), 0 12px 36px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 48px rgba(0, 0, 0, 0.5), 0 24px 80px rgba(0, 0, 0, 0.4);
+  --shadow-hover:
+    0 20px 60px rgba(74, 222, 152, 0.08), 0 8px 24px rgba(74, 222, 152, 0.05);
+
+  --noise-opacity: 0.04;
+  --grain-blend: screen;
+}
+
+@theme {
+  --color-white: var(--color-white);
+  --color-bg: var(--color-bg);
+  --color-bg-subtle: var(--color-bg-subtle);
+  --color-bg-muted: var(--color-bg-muted);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-accent: var(--color-accent);
+  --color-accent-light: var(--color-accent-light);
+  --color-accent-hover: var(--color-accent-hover);
+
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+/* ─── BASE ──────────────────────────────────────────────────── */
 @layer base {
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 350ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Exclude transforms/opacity from the global color transition */
+  [style*="transform"],
+  .no-color-transition {
+    transition-property: transform, opacity;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-bg text-text-primary font-sans antialiased selection:bg-accent/10 selection:text-accent;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-normal;
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 220px;
+    opacity: var(--noise-opacity);
+    mix-blend-mode: var(--grain-blend);
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 350ms ease;
   }
 
-  section {
-    @apply py-16 md:py-[120px] px-6 md:px-12 max-w-7xl mx-auto;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+    color: var(--color-accent);
   }
 
   .mono-label {
-    @apply font-mono text-[11px] uppercase tracking-[0.12em] font-medium text-text-tertiary;
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
   }
 
   .badge {
-    @apply font-mono text-[11px] tracking-[0.08em] bg-accent-light text-accent px-2 py-1 rounded-[4px] font-medium;
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background-color: var(--color-white);
+    color: var(--color-accent);
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 500;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
   }
 }
 
+/* ─── COMPONENTS ────────────────────────────────────────────── */
 @layer components {
   .btn-primary {
-    @apply bg-accent text-white px-5 py-3 rounded-[6px] font-medium transition-all duration-150 hover:bg-accent-hover active:scale-[0.98];
+    background-color: var(--color-accent);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.3s ease,
+      background-color 0.35s ease;
+  }
+
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .btn-primary:hover::after {
+    opacity: 1;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
   }
 
   .btn-ghost {
-    @apply text-text-secondary hover:text-text-primary transition-all duration-150 font-medium;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-accent);
   }
 
   .input-field {
-    @apply w-full bg-white border border-border rounded-[6px] px-4 py-3 text-sm font-sans outline-none transition-all duration-150 focus:border-accent focus:ring-4 focus:ring-accent/10;
+    width: 100%;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    color: var(--color-text-primary);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.35s ease;
+  }
+
+  .input-field:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px
+      color-mix(in srgb, var(--color-accent) 10%, transparent);
+  }
+
+  .input-field::placeholder {
+    color: var(--color-text-tertiary);
   }
 
   .card {
-    @apply bg-white border border-border rounded-[8px] p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:border-border-strong hover:-translate-y-0.5;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .glass {
+    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--color-border);
   }
 }
 
-html {
-  scroll-behavior: smooth;
+/* ─── THEME TOGGLE ──────────────────────────────────────────── */
+.theme-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  position: relative;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-text-secondary);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+}
+
+[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(20px);
+  background-color: var(--color-accent);
+}
+
+/* ─── MAXIMALISM HOVER EFFECTS ──────────────────────────────── */
+
+/* — Magnetic text shimmer — */
+.hover-shimmer {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--color-text-primary) 0%,
+    var(--color-accent) 40%,
+    var(--color-text-primary) 80%
+  );
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-position: 100%;
+  transition: background-position 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-shimmer:hover {
+  background-position: 0%;
+}
+
+/* — GSAP-style clip-path reveal on hover — */
+.hover-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.hover-reveal:hover::after {
+  transform: scaleX(1);
+}
+
+/* — Tilt card — */
+.tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  transition:
+    transform 0.1s ease-out,
+    box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* — Underline draw — */
+.underline-draw {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-draw::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.underline-draw:hover::after {
+  width: 100%;
+}
+
+/* — Service row hover expand — */
+.service-row {
+  position: relative;
+  overflow: hidden;
+  transition: padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background-color: var(--color-accent);
+  opacity: 0.06;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-row:hover::before {
+  width: 100%;
+}
+
+/* — Number pop — */
+.number-ghost {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-row:hover .number-ghost {
+  opacity: 0.18 !important;
+  transform: scale(1.08);
+}
+
+/* — Arrow circle spin — */
+.arrow-circle {
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.arrow-circle:hover,
+.service-row:hover .arrow-circle,
+.work-row:hover .arrow-circle,
+.process-row:hover .arrow-circle {
+  transform: rotate(-45deg) scale(1.15);
+  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* — Work row hover — */
+.work-row {
+  position: relative;
+}
+
+.work-row::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.work-row:hover::after {
+  opacity: 0.6;
+}
+
+.work-row .project-name {
+  transition:
+    letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s ease;
+}
+
+.work-row:hover .project-name {
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+}
+
+/* — Process step hover — */
+.process-row {
+  transition: background-color 0.4s ease;
+}
+
+.process-row:hover {
+  background-color: color-mix(in srgb, var(--color-accent) 3%, transparent);
+}
+
+.process-row .step-title {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s ease;
+  display: inline-block;
+}
+
+.process-row:hover .step-title {
+  transform: translateX(12px);
+  color: var(--color-accent);
+}
+
+/* — Stats card hover — */
+.stat-cell {
+  transition: background-color 0.4s ease;
+  position: relative;
+}
+
+.stat-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 70%,
+    color-mix(in srgb, var(--color-accent) 6%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.stat-cell:hover::after {
+  opacity: 1;
+}
+
+.stat-cell .stat-value {
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 0.3s ease;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.stat-cell:hover .stat-value {
+  transform: scale(1.06) translateY(-4px);
+  color: var(--color-accent);
+}
+
+/* — Tech tag hover — */
+.tech-tag {
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.tech-tag:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+/* — Nav link hover — */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.nav-link span {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link span:last-child {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  color: var(--color-accent);
+}
+
+.nav-link:hover span:first-child {
+  transform: translateY(-100%);
+}
+
+.nav-link:hover span:last-child {
+  transform: translateY(-100%);
+}
+
+/* — Footer wordmark track — */
+.footer-wordmark {
+  transition:
+    letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
+}
+
+.footer-wordmark:hover {
+  letter-spacing: 0.05em;
+}
+
+/* — Marquee item hover pause — */
+.marquee-item {
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.marquee-item:hover {
+  color: var(--color-accent);
+}
+
+/* ─── CUSTOM CURSOR ─────────────────────────────────────────── */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: exclusion;
+  transition:
+    transform 0.15s ease,
+    opacity 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    border-color 0.3s ease,
+    opacity 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-ring.hovering {
+  width: 52px;
+  height: 52px;
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }

@@ -1,60 +1,65 @@
 import React from 'react';
-import Section from './Section';
+import { motion } from 'framer-motion';
 import { MessageText, DocumentText, Setting2, Send2 } from 'iconsax-react';
 
-const steps = [
-  {
-    title: "Discovery",
-    description: "Deep dive into your vision, requirements, and business goals.",
-    icon: MessageText,
-  },
-  {
-    title: "Scope & Proposal",
-    description: "Detailed roadmap, technical architecture, and project milestones.",
-    icon: DocumentText,
-  },
-  {
-    title: "Build & Iterate",
-    description: "Agile development with weekly updates and continuous feedback.",
-    icon: Setting2,
-  },
-  {
-    title: "Launch",
-    description: "Final testing, deployment, and transition to your team.",
-    icon: Send2,
-  }
-];
-
 const Process = () => {
+  const steps = [
+    {
+      number: "01",
+      title: "Discovery",
+      description: "We dive deep into your goals, user needs, and technical requirements to build a solid foundation.",
+      icon: <MessageText size={20} />
+    },
+    {
+      number: "02",
+      title: "Scope & Proposal",
+      description: "A detailed breakdown of features, timelines, and fixed pricing. No surprises, just clarity.",
+      icon: <DocumentText size={20} />
+    },
+    {
+      number: "03",
+      title: "Build & Iterate",
+      description: "Weekly updates and staging deployments. We build out loud, ensuring the product evolves with your feedback.",
+      icon: <Setting2 size={20} />
+    },
+    {
+      number: "04",
+      title: "Launch & Support",
+      description: "Production deployment, documentation, and a post-launch support period to ensure a smooth transition.",
+      icon: <Send2 size={20} />
+    }
+  ];
+
   return (
-    <Section id="process">
-      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted mb-4 block">
-        How It Works
-      </span>
-      <h2 className="text-4xl md:text-5xl mb-20">Our Process</h2>
+    <>
+      <div className="mb-16">
+        <span className="mono-label">How We Work</span>
+        <h2 className="text-[42px] mt-4">A streamlined path to production.</h2>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 relative">
-        {/* Connection line for desktop */}
-        <div className="hidden lg:block absolute top-12 left-0 w-full h-[1px] bg-border -z-10" />
-
+      <div className="border-t border-border">
         {steps.map((step, index) => (
-          <div key={index} className="relative">
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-10 h-10 bg-bg border border-border rounded-full flex items-center justify-center text-text2 relative z-10">
-                <step.icon size={20} color="currentColor" />
-              </div>
-              <span className="font-serif italic text-6xl text-border/40 select-none">
-                0{index + 1}
-              </span>
+          <motion.div
+            key={index}
+            whileHover={{ backgroundColor: "var(--color-bg-subtle)" }}
+            className="grid md:grid-cols-[1fr_2fr_auto] gap-8 py-10 px-6 border-b border-border items-center transition-colors duration-200 group"
+          >
+            <div className="flex items-center gap-4">
+              <span className="font-serif italic text-[13px] text-text-tertiary">{step.number}</span>
+              <h3 className="text-2xl font-serif">{step.title}</h3>
             </div>
-            <h3 className="font-sans font-medium text-lg mb-3">{step.title}</h3>
-            <p className="font-sans font-light text-sm text-text2 leading-relaxed">
+
+            <p className="text-text-secondary text-sm font-light leading-[1.7] max-w-xl">
               {step.description}
             </p>
-          </div>
+
+            <div className="text-text-tertiary group-hover:text-accent transition-colors duration-200">
+              {step.icon}
+            </div>
+          </motion.div>
         ))}
       </div>
-    </Section>
+    </>
   );
 };
 

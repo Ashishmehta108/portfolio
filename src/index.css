@@ -1,65 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400;1,9..40,500&family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #f4f2ee;
-  --color-bg2: #edeae4;
-  --color-surface: #faf9f7;
-  --color-border: #dedad3;
-  --color-border2: #c9c4bb;
-  --color-text: #1a1916;
-  --color-text2: #57534a;
-  --color-muted: #9c9589;
-  --color-accent: #2a5c45;
-  --color-accent2: #1e3a5f;
-  --color-accent-lt: #e6f0eb;
+  --color-white: #ffffff;
+  --color-bg: #fafaf9;
+  --color-bg-subtle: #f5f4f1;
+  --color-bg-muted: #eeece8;
+  --color-border: #e4e2dc;
+  --color-border-strong: #ccc9c1;
+  --color-text-primary: #111110;
+  --color-text-secondary: #6b6860;
+  --color-text-tertiary: #a8a49e;
+  --color-accent: #18794e;
+  --color-accent-light: #f0faf5;
+  --color-accent-hover: #136740;
 
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "DM Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Geist", sans-serif;
+  --font-mono: "Geist Mono", monospace;
 
-  --shadow-custom: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.07), 0 16px 48px rgba(0,0,0,0.05);
 }
 
 @layer base {
   body {
-    @apply bg-bg text-text font-sans antialiased selection:bg-accent/10 selection:text-accent;
-    position: relative;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    @apply bg-bg text-text-primary font-sans antialiased selection:bg-accent/10 selection:text-accent;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-bold;
+    @apply font-serif font-normal;
+  }
+
+  section {
+    @apply py-16 md:py-[120px] px-6 md:px-12 max-w-7xl mx-auto;
   }
 
   .mono-label {
-    @apply font-mono text-[10px] uppercase tracking-[0.08em] font-medium;
+    @apply font-mono text-[11px] uppercase tracking-[0.12em] font-medium text-text-tertiary;
   }
 
   .badge {
-    @apply font-mono text-[10px] uppercase tracking-[0.08em] bg-accent-lt text-accent px-2 py-0.5 rounded-sm;
+    @apply font-mono text-[11px] tracking-[0.08em] bg-accent-light text-accent px-2 py-1 rounded-[4px] font-medium;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-accent text-white px-6 py-2.5 rounded-[4px] font-medium transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-accent text-white px-5 py-3 rounded-[6px] font-medium transition-all duration-150 hover:bg-accent-hover active:scale-[0.98];
   }
 
   .btn-ghost {
-    @apply border border-border text-text px-6 py-2.5 rounded-[4px] font-medium transition-all duration-150 hover:-translate-y-0.5 hover:border-border2 active:translate-y-0;
+    @apply text-text-secondary hover:text-text-primary transition-all duration-150 font-medium;
+  }
+
+  .input-field {
+    @apply w-full bg-white border border-border rounded-[6px] px-4 py-3 text-sm font-sans outline-none transition-all duration-150 focus:border-accent focus:ring-4 focus:ring-accent/10;
+  }
+
+  .card {
+    @apply bg-white border border-border rounded-[8px] p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:border-border-strong hover:-translate-y-0.5;
   }
 }
 

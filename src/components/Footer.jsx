@@ -1,35 +1,43 @@
 import React from 'react';
-import { Code } from 'iconsax-react';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const navLinks = [
+    { name: 'Services', href: '#services' },
+    { name: 'Work', href: '#work' },
+    { name: 'Process', href: '#process' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <footer className="bg-bg2 py-12 px-6 md:px-12 lg:px-24 border-t border-border">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="flex flex-col items-center md:items-start gap-2">
-          <div className="flex items-center gap-2">
-            <Code size={18} color="currentColor" />
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-serif italic font-bold text-lg leading-none">SSS</span>
-              <span className="font-sans font-medium text-xs">Stable System Solutions</span>
-            </div>
+    <footer className="bg-bg-subtle border-t border-border">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+          <a href="#" className="font-serif italic text-xl text-text-primary">
+            Stable System Solutions
+          </a>
+
+          <div className="flex flex-wrap gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-[14px] text-text-secondary hover:text-text-primary transition-colors duration-150"
+              >
+                {link.name}
+              </a>
+            ))}
           </div>
-          <span className="font-mono text-[10px] text-muted tracking-[0.1em] uppercase">building with intention.</span>
         </div>
 
-        <div className="flex items-center gap-8">
-          {['Services', 'Work', 'Process', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-[11px] font-mono uppercase tracking-widest text-text2 hover:text-text transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-
-        <div className="text-[11px] font-mono text-muted uppercase tracking-widest">
-          © 2025 Stable System Solutions
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <span className="mono-label !text-text-tertiary">
+            building with intention · chandigarh, india
+          </span>
+          <span className="text-[12px] text-text-tertiary">
+            © {currentYear} Stable System Solutions. All rights reserved.
+          </span>
         </div>
       </div>
     </footer>

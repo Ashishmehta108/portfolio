@@ -8,18 +8,33 @@ import Work from './components/Work';
 import Stats from './components/Stats';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Section from './components/Section';
 
 function App() {
   return (
     <div className="min-h-screen bg-bg selection:bg-accent/10 selection:text-accent">
       <Navbar />
       <main>
-        <Hero />
-        <Services />
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <Hero />
+        </div>
+
+        <Section id="services">
+          <Services />
+        </Section>
+
         <TechStack />
-        <Process />
-        <Work />
+
+        <Section id="process">
+          <Process />
+        </Section>
+
+        <Section id="work">
+          <Work />
+        </Section>
+
         <Stats />
+
         <Contact />
       </main>
       <Footer />

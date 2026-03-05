@@ -1,85 +1,81 @@
 import React from 'react';
-import Section from './Section';
-import { ExportSquare } from 'iconsax-react';
 import { motion } from 'framer-motion';
-
-const projects = [
-  {
-    name: "Aria",
-    category: "AI Customer Support Agent",
-    description: "Intelligent agent that handles support queries, integrates with documentation, and escalates to humans.",
-    tech: ["OpenAI", "Next.js", "Supabase"],
-    letter: "A"
-  },
-  {
-    name: "Vantage",
-    category: "Inventory Management SaaS",
-    description: "Cloud-based inventory tracking for multi-location retail businesses with real-time analytics.",
-    tech: ["React", "Node.js", "PostgreSQL"],
-    letter: "V"
-  },
-  {
-    name: "FlowOps",
-    category: "Workflow Automation Dashboard",
-    description: "Enterprise dashboard for managing complex automated workflows across multiple internal tools.",
-    tech: ["n8n", "LangChain", "Python"],
-    letter: "F"
-  }
-];
+import { ExportSquare } from 'iconsax-react';
 
 const Work = () => {
-  return (
-    <Section id="work">
-      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted mb-4 block">
-        Recent Work
-      </span>
-      <h2 className="text-4xl md:text-5xl mb-16">Selected Projects</h2>
+  const projects = [
+    {
+      name: "Aria",
+      initial: "A",
+      category: "AI Support Agent",
+      description: "Automated 70% of support queries for a US SaaS company using custom RAG and OpenAI.",
+      tech: ["OpenAI", "Next.js", "Supabase"]
+    },
+    {
+      name: "Vantage",
+      initial: "V",
+      category: "Inventory SaaS",
+      description: "Real-time inventory platform serving 3 warehouses with complex multi-tenant architecture.",
+      tech: ["React", "Node.js", "PostgreSQL"]
+    },
+    {
+      name: "FlowOps",
+      initial: "F",
+      category: "Automation Dashboard",
+      description: "Reduced ops workload by 60% through intelligent workflow automation and n8n pipelines.",
+      tech: ["n8n", "LangChain", "Python"]
+    }
+  ];
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+  return (
+    <>
+      <div className="mb-16">
+        <span className="mono-label">Selected Work</span>
+        <h2 className="text-[42px] mt-4">Products we're proud of.</h2>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-            className="group bg-surface border border-border rounded-[6px] p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:border-border2 hover:shadow-custom overflow-hidden relative"
+            transition={{ delay: index * 0.1 }}
+            className="bg-white border border-border rounded-[8px] overflow-hidden group hover:shadow-lg hover:border-border-strong transition-all duration-300"
           >
-            <div className="absolute top-[-20px] left-[-10px] select-none pointer-events-none opacity-5 group-hover:opacity-10 transition-opacity">
-              <span className="font-serif italic font-bold text-[180px] text-border leading-none">
-                {project.letter}
+            <div className="h-[180px] bg-bg-muted relative flex items-center justify-center overflow-hidden">
+              <span className="font-serif italic text-[300px] leading-none text-border-strong select-none translate-y-8 group-hover:scale-105 transition-transform duration-500">
+                {project.initial}
               </span>
             </div>
 
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="flex items-baseline justify-between mb-4">
-                <h3 className="text-2xl font-serif font-bold">{project.name}</h3>
-                <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-accent font-medium bg-accent-lt px-2 py-0.5 rounded-sm">
-                  {project.category.split(' ')[0]}
-                </span>
+            <div className="p-7">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-serif">{project.name}</h3>
+                <span className="mono-label !text-[10px] tracking-widest">{project.category}</span>
               </div>
 
-              <p className="font-sans font-light text-sm text-text2 leading-relaxed mb-8 flex-grow">
+              <p className="text-text-secondary text-sm font-light leading-[1.7] mb-6">
                 {project.description}
               </p>
 
-              <div className="flex items-center justify-between mt-auto pt-6 border-t border-border">
-                <div className="flex gap-2">
-                  {project.tech.slice(0, 2).map(t => (
-                    <span key={t} className="font-mono text-[9px] uppercase tracking-wider text-muted">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <a href="#" className="flex items-center gap-1.5 text-xs font-medium hover:text-accent transition-colors">
-                  View Project <ExportSquare size={14} />
-                </a>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tech.map((t) => (
+                  <span key={t} className="bg-bg-subtle text-text-secondary px-2 py-0.5 rounded-[4px] text-[10px] font-mono border border-border">
+                    {t}
+                  </span>
+                ))}
               </div>
+
+              <a href="#" className="flex items-center gap-2 text-text-primary text-sm font-medium hover:text-accent transition-colors">
+                View Case Study <ExportSquare size={16} />
+              </a>
             </div>
           </motion.div>
         ))}
       </div>
-    </Section>
+    </>
   );
 };
 

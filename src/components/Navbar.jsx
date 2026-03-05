@@ -1,41 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Code } from 'iconsax-react';
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60);
+      setScrolled(window.scrollY > 60);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'Services', href: '#services' },
+    { name: 'Work', href: '#work' },
+    { name: 'Process', href: '#process' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-bg/88 backdrop-blur-md border-b border-border py-4' : 'bg-transparent py-6'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Code size={20} color="currentColor" />
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-serif italic font-bold text-xl leading-none">SSS</span>
-            <span className="font-sans font-medium text-sm hidden sm:inline">Stable System Solutions</span>
-          </div>
-        </div>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[60px] flex items-center ${
+        scrolled
+          ? 'bg-bg/85 backdrop-blur-[16px] saturate-[180%] border-b border-border'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 flex justify-between items-center">
+        <a href="#" className="font-serif italic text-lg text-text-primary tracking-tight">
+          Stable System Solutions
+        </a>
 
         <div className="hidden md:flex items-center gap-8">
-          {['Services', 'Work', 'Process', 'Contact'].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="text-sm font-sans font-normal text-text2 hover:text-text transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-          <a href="#contact" className="btn-primary text-sm py-2">
+          <div className="flex gap-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-[14px] text-text-secondary hover:text-text-primary transition-colors duration-150"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+          <a href="#contact" className="btn-primary py-2 px-5 text-sm">
             Start a Project →
           </a>
         </div>
